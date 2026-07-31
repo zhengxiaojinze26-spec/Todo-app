@@ -12,4 +12,10 @@
     @else
         <p>Ο{{$todo->title}}</p>
     @endif
+
+    <form action="/todos/{{$todo->id}}" method="POST" style="display: inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit">削除</button>
+    </form>
 @endforeach
