@@ -74,4 +74,16 @@ class TodoController extends Controller
         $todo->delete();
         return redirect('/todos');
     }
+
+    /**
+     * タスク完了・未完了
+     */
+    public function complete(Todo $todo)
+    {
+        $todo->update([
+            'completed'=>!$todo->completed
+        ]);
+
+        return redirect('/todos');
+    }
 }
