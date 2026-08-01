@@ -8,5 +8,6 @@ class todo extends Model
 {
     protected $fillable=[
         'title',
+        'completed'
     ];
 }
