@@ -28,4 +28,7 @@
         @method('PATCH')
         <button type="submit">完了</button>
     </form>
+
+    <!--編集ページ移動-->
+    <a href="/todos/{{$todo->id}}/edit">編集</a>
 @endforeach

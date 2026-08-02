@@ -53,17 +53,24 @@ class TodoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Todo $todo)
     {
-        //
+        return view('edit',compact('todo'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Todo $todo)
     {
-        //
+        $request->validate([
+            'title'=>'required|max:5',
+        ]);
+        $todo->update([
+            'title'=>$request->title
+        ]);
+
+        return redirect('/todos');
     }
 
     /**
