@@ -1,4 +1,4 @@
-<h1>Todo一覧</h1>
+<h1>Todoリスト</h1>
 
 <!--追加フォーム-->
 <form action="/todos" method="POST">
