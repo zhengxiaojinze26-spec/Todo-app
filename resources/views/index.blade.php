@@ -8,6 +8,7 @@
 
 <body>
     <div class="container">
+
     <header>
         <h1>Todoリスト</h1>
 
@@ -26,29 +27,37 @@
     <!--タスク一覧表示-->
     <div class="tasks">
     @foreach($todos as $todo)
-        @if($todo->completed)
-            <p>Θ　{{$todo->title}}</p>
-        @else
-            <p>Ο　{{$todo->title}}</p>
-        @endif
 
-        <div class="forms">
-        <!--削除フォーム-->
-        <form action="/todos/{{$todo->id}}" method="POST" style="display: inline;">
-            @csrf
-            @method('DELETE')
-            <button type="submit">削除</button>
-        </form>
+        <div class="task-column">
+            <div class="task-content">
+                @if($todo->completed)
+                    <p>Θ　{{$todo->title}}</p>
+                @else
+                    <p>Ο　{{$todo->title}}</p>
+                @endif
+            </div>
 
-        <!--完了フォーム-->
-        <form action="/todos/{{$todo->id}}/complete" method="POST" style="display: inline;">
-            @csrf
-            @method('PATCH')
-            <button type="submit">完了</button>
-        </form>
+            <div class="forms">
+                <!--削除フォーム-->
+                <form action="/todos/{{$todo->id}}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">削除</button>
+                </form>
 
-        <!--編集ページ移動-->
-        <a href="/todos/{{$todo->id}}/edit">編集</a>
+                <!--完了フォーム-->
+                <form action="/todos/{{$todo->id}}/complete" method="POST" style="display: inline;">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit">完了</button>
+                </form>
+
+                <!--編集ページ移動-->
+                <form action="/todos/{{$todo->id}}/edit" method="GET" style="display: inline;">
+                    @csrf
+                    <button type="submit">編集</button>
+                </form>
+            </div>
         </div>
     @endforeach
     </div>
