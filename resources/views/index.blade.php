@@ -7,8 +7,11 @@
 </head>
 
 <body>
+    <div class="container">
     <header>
         <h1>Todoリスト</h1>
+
+        <div class="index-form">
         <p>追加するタスクを入力してください。</p>
 
         <!--追加フォーム-->
@@ -17,6 +20,7 @@
             <input type="text" name="title" value="{{old('title')}}" placeholder="タスクを入力">
             <button type="submit">追加</button>
         </form>
+        </div>
     </header>
 
     <!--タスク一覧表示-->
@@ -52,5 +56,6 @@
     <button class="btn btn-primary">
         Bootstrapテスト
     </button>
+    </div>
 </body>
 </html>
