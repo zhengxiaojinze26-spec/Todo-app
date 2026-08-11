@@ -59,12 +59,10 @@
                 </form>
             </div>
         </div>
+
     @endforeach
     </div>
 
-    <button class="btn btn-primary">
-        Bootstrapテスト
-    </button>
     </div>
 </body>
 </html>

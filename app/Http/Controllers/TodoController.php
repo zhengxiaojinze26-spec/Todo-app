@@ -55,7 +55,9 @@ class TodoController extends Controller
      */
     public function edit(Todo $todo)
     {
-        return view('edit',compact('todo'));
+        $todos=Todo::latest()->get();
+
+        return view('edit',compact('todo','todos'));
     }
 
     /**

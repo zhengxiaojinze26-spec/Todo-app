@@ -23,3 +23,8 @@
     margin-right: 30px;
     height: 50px;
 }
+
+.back{
+    display: flex;
+    justify-content: flex-end;
+}
