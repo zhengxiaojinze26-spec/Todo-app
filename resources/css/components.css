@@ -23,3 +23,12 @@
     margin-right: 30px;
     height: 50px;
 }
+
+.back{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.header-form{
+    padding: 15px 50px;
+}

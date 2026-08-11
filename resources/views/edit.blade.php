@@ -11,7 +11,7 @@
     <header>
         <h1>編集画面</h1>
 
-        <div class="index-form">
+        <div class="header-form">
         <p>タスク名を変更してください。</p>
 
         <!--編集フォーム-->
@@ -24,6 +24,28 @@
         </div>
     </header>
 
+    <!--タスク一覧表示-->
+    <div class="tasks">
+    @foreach($todos as $task)
+
+        <div class="task-column {{$task->id===$todo->id ? 'editing' : ''}}">
+            <div class="task-content">
+                @if($task->completed)
+                    <p>Θ　{{$task->title}}</p>
+                @else
+                    <p>Ο　{{$task->title}}</p>
+                @endif
+
+            </div>
+        </div>
+
+    @endforeach
+    </div>
+
+    <!--トップページに戻る-->
+    <form class="back" action="/" Method="get">
+        <button type="submit">戻る</button>
+    </form>
     </div>
 </body>
 </html>

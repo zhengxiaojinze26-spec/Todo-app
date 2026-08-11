@@ -12,7 +12,7 @@
     <header>
         <h1>Todoリスト</h1>
 
-        <div class="index-form">
+        <div class="header-form">
         <p>追加するタスクを入力してください。</p>
 
         <!--追加フォーム-->
@@ -59,12 +59,10 @@
                 </form>
             </div>
         </div>
+
     @endforeach
     </div>
 
-    <button class="btn btn-primary">
-        Bootstrapテスト
-    </button>
     </div>
 </body>
 </html>
