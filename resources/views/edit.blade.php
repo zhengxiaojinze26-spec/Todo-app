@@ -11,7 +11,7 @@
     <header>
         <h1>編集画面</h1>
 
-        <div class="index-form">
+        <div class="header-form">
         <p>タスク名を変更してください。</p>
 
         <!--編集フォーム-->
