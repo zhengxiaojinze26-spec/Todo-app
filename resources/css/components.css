@@ -1,0 +1,25 @@
+.tasks{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 15px;
+}
+
+.task-column{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.task-content{
+    font-size: 1.25rem;
+}
+
+.forms{
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    margin-left: auto;
+    margin-right: 30px;
+    height: 50px;
+}
