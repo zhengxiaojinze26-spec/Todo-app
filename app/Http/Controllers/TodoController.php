@@ -12,7 +12,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos=Todo::latest()->get();
+        $todos=auth()->user()->todos()->latest()->get();
 
         return view('index',compact('todos'));
     }
@@ -35,6 +35,7 @@ class TodoController extends Controller
         ]);
 
         Todo::create([
+            'user_id'=>auth()->id(),
             'title'=>$request->title,
             'completed'=>false
         ]);
@@ -55,7 +56,11 @@ class TodoController extends Controller
      */
     public function edit(Todo $todo)
     {
-        $todos=Todo::latest()->get();
+        if($todo->user_id !== auth()->id()){
+            abort(403);
+        }
+
+        $todos=auth()->user()->todos()->latest()->get();
 
         return view('edit',compact('todo','todos'));
     }
@@ -65,9 +70,14 @@ class TodoController extends Controller
      */
     public function update(Request $request, Todo $todo)
     {
+        if($todo->user_id!=auth()->id()){
+            abort(403);
+        }
+
         $request->validate([
             'title'=>'required|max:5',
         ]);
+
         $todo->update([
             'title'=>$request->title
         ]);
@@ -80,6 +90,10 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
+        if($todo->user_id!=auth()->id()){
+            abort(403);
+        }
+
         $todo->delete();
         return redirect('/todos');
     }
@@ -89,6 +103,10 @@ class TodoController extends Controller
      */
     public function complete(Todo $todo)
     {
+        if($todo->user_id!=auth()->id()){
+            abort(403);
+        }
+
         $todo->update([
             'completed'=>!$todo->completed
         ]);

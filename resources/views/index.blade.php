@@ -21,6 +21,12 @@
             <input type="text" name="title" value="{{old('title')}}" placeholder="タスクを入力">
             <button type="submit">追加</button>
         </form>
+
+        <!--ログアウト-->
+        <form action="{{route('logout')}}" method="POST">
+            @csrf
+            <button type="submit">Log out</button>
+        </form>
         </div>
     </header>
 
