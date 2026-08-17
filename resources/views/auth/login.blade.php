@@ -1,54 +1,69 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>login</title>
+    @vite(['resources/css/app.css','resources/js/app.js'])
+</head>
 
-    <form method="POST" action="{{ route('login') }}">
+<body>
+    <div class="container">
+
+    <header>
+        <h1>ログイン画面</h1>
+    </header>
+
+    <main class="login-main d-flex justify-content-center align-items-center">
+    <form class="w-75" method="POST" action="{{route('login')}}">
         @csrf
 
-        <!-- Email Address -->
-        <div class="mb-3">
-            <label for="email" class="form-label">{{ __('Email') }}</label>
-            <input id="email" type="email" name="email" value="{{ old('email') }}"
-                    class="form-control @error('email') is-invalid @enderror"
-                    required autofocus autocomplete="username">
+        <!--メールアドレス入力フォーム-->
+        <div class="mb-4">
+            <label for="email" class="form-label">メールアドレス</label>
+            <input id="email" type="email" name="email" value="{{old('email')}}"
+            class="form-control @error('email') is-invalid @enderror"
+            required autofocus autocomplete="username">
             @error('email')
                 <div class="invalid-feedback">
-                    {{ $message }}
+                    {{$message}}
                 </div>
             @enderror
         </div>
 
-        <!-- Password -->
+        <!--パスワード入力フォーム-->
         <div class="mb-3">
-            <label for="password" class="form-label">{{ __('Password') }}</label>
+            <label for="password" class="form-label">パスワード</label>
             <input id="password" type="password" name="password"
-                class="form-control @error('password') is-invalid @enderror"
-                required autocomplete="current-password">
+            class="form-control @error('password') is-invalid @enderror"
+            required autocomplete="current-password">
             @error('password')
                 <div class="invalid-feedback">
-                    {{ $message }}
+                    {{$message}}
                 </div>
             @enderror
         </div>
 
-        <!-- Remember Me -->
-        <div class="mb-3 form-check">
+        <!--セッション維持-->
+        <div class="mb-5 form-check">
             <input id="remember_me" type="checkbox" class="form-check-input" name="remember">
-            <label for="remember_me" class="form-check-label">
-                {{ __('Remember me') }}
-            </label>
+            <label for="remember_me" class="form-check-label">ログイン状態を維持する</label>
         </div>
 
+        <!--パスワードリクエスト-->
         <div class="d-flex align-items-center justify-content-end mt-4">
             @if (Route::has('password.request'))
-                <a class="text-decoration-underline small text-muted me-3" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
+                <a class="text-decoration-underline small text-muted me-3"
+                href="{{Route('password.request')}}">パスワードを忘れた場合はこちら</a>
             @endif
 
             <button type="submit" class="btn btn-primary">
-                {{ __('Log in') }}
+                {{__('Log in')}}
             </button>
         </div>
+
     </form>
-</x-guest-layout>
+    </main>
+
+    </div>
+</body>
+</html>
