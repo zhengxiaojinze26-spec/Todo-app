@@ -6,6 +6,7 @@
 @import './pages/index.css';
 @import './pages/edit.css';
 @import './pages/login.css';
+@import './pages/forgot.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
