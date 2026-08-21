@@ -31,7 +31,7 @@
     </header>
 
     <!--タスク一覧表示-->
-    <div class="tasks">
+    <main class="tasks">
     @foreach($todos as $todo)
 
         <div class="task-column">
@@ -67,7 +67,7 @@
         </div>
 
     @endforeach
-    </div>
+    </main>
 
     </div>
 </body>
