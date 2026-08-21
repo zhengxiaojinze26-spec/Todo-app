@@ -10,7 +10,15 @@
     <div class="container">
 
     <header>
+        <div class="d-flex justify-content-between">
         <h1>Todoリスト</h1>
+
+        <!--ログアウト-->
+        <form class="d-flex align-items-end me-3" action="{{route('logout')}}" method="POST">
+            @csrf
+            <button type="submit">Log out</button>
+        </form>
+        </div>
 
         <div class="header-form">
         <p>追加するタスクを入力してください。</p>
@@ -20,12 +28,6 @@
             @csrf
             <input type="text" name="title" value="{{old('title')}}" placeholder="タスクを入力">
             <button type="submit">追加</button>
-        </form>
-
-        <!--ログアウト-->
-        <form action="{{route('logout')}}" method="POST">
-            @csrf
-            <button type="submit">Log out</button>
         </form>
         </div>
     </header>
