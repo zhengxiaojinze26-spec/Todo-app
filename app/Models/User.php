@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Todo;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -22,6 +23,12 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+
+    public function todos()
+    {
+        return $this->hasmany(Todo::class);
+    }
+
     protected function casts(): array
     {
         return [

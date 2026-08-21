@@ -25,7 +25,7 @@
     </header>
 
     <!--タスク一覧表示-->
-    <div class="tasks">
+    <main class="tasks">
     @foreach($todos as $task)
 
         <div class="task-column {{$task->id===$todo->id ? 'editing' : ''}}">
@@ -40,10 +40,10 @@
         </div>
 
     @endforeach
-    </div>
+    </main>
 
     <!--トップページに戻る-->
-    <form class="back" action="/" Method="get">
+    <form class="back mt-5" action="/" Method="get">
         <button type="submit">戻る</button>
     </form>
     </div>

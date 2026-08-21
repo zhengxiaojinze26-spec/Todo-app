@@ -10,7 +10,15 @@
     <div class="container">
 
     <header>
+        <div class="d-flex justify-content-between">
         <h1>Todoリスト</h1>
+
+        <!--ログアウト-->
+        <form class="d-flex align-items-end me-3" action="{{route('logout')}}" method="POST">
+            @csrf
+            <button type="submit">Log out</button>
+        </form>
+        </div>
 
         <div class="header-form">
         <p>追加するタスクを入力してください。</p>
@@ -25,7 +33,7 @@
     </header>
 
     <!--タスク一覧表示-->
-    <div class="tasks">
+    <main class="tasks">
     @foreach($todos as $todo)
 
         <div class="task-column">
@@ -61,7 +69,7 @@
         </div>
 
     @endforeach
-    </div>
+    </main>
 
     </div>
 </body>
