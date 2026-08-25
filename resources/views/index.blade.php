@@ -73,7 +73,8 @@
 
                 <!--編集ページ移動-->
                 <form action="/todos/{{$todo->id}}/edit" method="GET" style="display: inline;">
-                    @csrf
+                    <input type="hidden" name="keyword" value="{{ $keyword }}">
+                    <input type="hidden" name="status" value="{{ $status }}">
                     <button type="submit">編集</button>
                 </form>
             </div>
