@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Todo;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class TodoController extends Controller
@@ -10,11 +11,24 @@ class TodoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): View
     {
-        $todos=auth()->user()->todos()->latest()->get();
+        $keyword=$request->input('keyword');
+        $status=$request->input('status');
 
-        return view('index',compact('todos'));
+        $todos=auth()->user()->todos()
+        ->when($keyword,function($query) use ($keyword){
+            $query->where('title','like','%' . $keyword . '%');
+        })
+        ->when($status==='incomplete',function($query){
+            $query->where('completed',false);
+        })
+        ->when($status==='completed',function($query){
+            $query->where('completed',true);
+        })
+        ->latest()->get();
+
+        return view('index',compact('todos','keyword','status'));
     }
 
     /**
@@ -31,7 +45,7 @@ class TodoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'=>'required|max:5',
+            'title'=>'required|max:255',
         ]);
 
         Todo::create([
@@ -112,5 +126,13 @@ class TodoController extends Controller
         ]);
 
         return redirect('/todos');
+    }
+
+    /**
+     * 検索処理
+     */
+    public function search(): View
+    {
+        return view('search');
     }
 }

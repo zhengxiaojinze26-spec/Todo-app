@@ -34,8 +34,19 @@
 
     <!--タスク一覧表示-->
     <main class="tasks">
+
+    <!--メッセージ-->
+
+    <p>「{{ $keyword }}/{{ $status }}」の検索結果： {{ $todos->count() }}件の表示</p>
+
+    @if($todos->isEmpty())
+        <p>該当するTodoがありません。</p>
+    @endif
+
+    <!--各タスク表示-->
     @foreach($todos as $todo)
 
+        <!--タスク完了/未完了判定-->
         <div class="task-column">
             <div class="task-content">
                 @if($todo->completed)
@@ -69,6 +80,11 @@
         </div>
 
     @endforeach
+
+    <!--検索フォーム-->
+    <form action="{{ route('todos.search')}}" method="GET">
+        <button type="submit">検索</button>
+    </form>
     </main>
 
     </div>
