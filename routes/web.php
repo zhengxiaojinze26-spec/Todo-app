@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/todos/search',[TodoController::class,'search'])->name('todos.search');
     Route::resource('todos',TodoController::class);
     Route::PATCH('/todos/{todo}/complete',[TodoController::class,'complete']);
 });

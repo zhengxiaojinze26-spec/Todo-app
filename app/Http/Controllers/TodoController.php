@@ -3,18 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Models\Todo;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * タスク一覧データの受け渡し
      */
-    public function index()
+    public function index(Request $request): View
     {
-        $todos=auth()->user()->todos()->latest()->get();
+        $keyword=$request->input('keyword');
+        $status=$request->input('status');
 
-        return view('index',compact('todos'));
+        $todos=auth()->user()->todos()
+        ->when($keyword,function($query) use ($keyword){
+            $query->where('title','like','%' . $keyword . '%');
+        })
+        ->when($status==='incomplete',function($query){
+            $query->where('completed',false);
+        })
+        ->when($status==='completed',function($query){
+            $query->where('completed',true);
+        })
+        ->latest()->get();
+
+        return view('index',compact('todos','keyword','status'));
     }
 
     /**
@@ -26,12 +40,12 @@ class TodoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * タスク追加
      */
     public function store(Request $request)
     {
         $request->validate([
-            'title'=>'required|max:5',
+            'title'=>'required|max:255',
         ]);
 
         Todo::create([
@@ -52,21 +66,34 @@ class TodoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 編集ページへのリダイレクト
      */
-    public function edit(Todo $todo)
+    public function edit(Request $request,Todo $todo)
     {
         if($todo->user_id !== auth()->id()){
             abort(403);
         }
 
-        $todos=auth()->user()->todos()->latest()->get();
+        $keyword=$request->input('keyword');
+        $status=$request->input('status');
 
-        return view('edit',compact('todo','todos'));
+        $todos=auth()->user()->todos()
+        ->when($keyword,function($query) use ($keyword){
+            $query->where('title','like','%' . $keyword . '%');
+        })
+        ->when($status==='incomplete',function($query){
+            $query->where('completed',false);
+        })
+        ->when($status==='completed',function($query){
+            $query->where('completed',true);
+        })
+        ->latest()->get();
+
+        return view('edit',compact('todo','todos','keyword','status'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * タスク名更新
      */
     public function update(Request $request, Todo $todo)
     {
@@ -75,18 +102,21 @@ class TodoController extends Controller
         }
 
         $request->validate([
-            'title'=>'required|max:5',
+            'title'=>'required|max:255',
         ]);
 
         $todo->update([
             'title'=>$request->title
         ]);
 
-        return redirect('/todos');
+        return redirect()->route('todos.index',[
+            'keyword'=>$request->input('keyword'),
+            'status'=>$request->input('status'),
+        ]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * タスク削除
      */
     public function destroy(Todo $todo)
     {
@@ -95,7 +125,7 @@ class TodoController extends Controller
         }
 
         $todo->delete();
-        return redirect('/todos');
+        return redirect(url()->previous());
     }
 
     /**
@@ -111,6 +141,14 @@ class TodoController extends Controller
             'completed'=>!$todo->completed
         ]);
 
-        return redirect('/todos');
+        return redirect(url()->previous());
+    }
+
+    /**
+     * 検索処理
+     */
+    public function search(): View
+    {
+        return view('search');
     }
 }

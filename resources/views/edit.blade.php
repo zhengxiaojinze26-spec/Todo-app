@@ -18,6 +18,10 @@
         <form action="/todos/{{$todo->id}}" method="POST">
             @csrf
             @method('PUT')
+
+            <input type="hidden" name="keyword" value="{{ $keyword }}">
+            <input type="hidden" name="status" value="{{ $status}}">
+
             <input type="text" name="title" value="{{$todo->title}}">
             <button type="submit">更新</button>
         </form>
@@ -42,10 +46,6 @@
     @endforeach
     </main>
 
-    <!--トップページに戻る-->
-    <form class="back mt-5" action="/" Method="get">
-        <button type="submit">戻る</button>
-    </form>
     </div>
 </body>
 </html>
