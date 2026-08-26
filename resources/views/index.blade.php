@@ -26,7 +26,21 @@
         <!--追加フォーム-->
         <form action="/todos" method="POST">
             @csrf
-            <input type="text" name="title" value="{{old('title')}}" placeholder="タスクを入力">
+            <!--期限/優先度フォーム-->
+            <input type="text" name="title" value="{{ old('title') }}" placeholder="タスクを入力">
+            <input type="date" name="due_date" value="{{ old('due_date')}}">
+            <select name="priority">
+                <option value="high" {{ old('priority')==='high'?'selected':'' }}>
+                    高
+                </option>
+                <option value="medium" {{ old('priority','medium')==='medium'?'selected':'' }}>
+                    中
+                </option>
+                <option value="low" {{ old('priority')==='low'?'selected':'' }}>
+                    低
+                </option>
+            </select>
+
             <button type="submit">追加</button>
         </form>
         </div>
@@ -34,18 +48,14 @@
 
     <!--タスク一覧表示-->
     <main class="tasks">
-
     <!--メッセージ-->
-
     <p>「{{ $keyword }}/{{ $status }}」の検索結果： {{ $todos->count() }}件の表示</p>
-
     @if($todos->isEmpty())
         <p>該当するTodoがありません。</p>
     @endif
 
     <!--各タスク表示-->
     @foreach($todos as $todo)
-
         <!--タスク完了/未完了判定-->
         <div class="task-column">
             <div class="task-content">
@@ -54,6 +64,11 @@
                 @else
                     <p>Ο　{{$todo->title}}</p>
                 @endif
+
+                <div class="d-flex text-muted small gap-4">
+                <p>期限：{{$todo->due_date ?? 'なし'}}</p>
+                <p>優先度：{{$todo->priority}}</p>
+                </div>
             </div>
 
             <div class="forms">
@@ -79,7 +94,6 @@
                 </form>
             </div>
         </div>
-
     @endforeach
 
     <!--検索フォーム-->

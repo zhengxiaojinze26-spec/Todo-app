@@ -46,12 +46,16 @@ class TodoController extends Controller
     {
         $request->validate([
             'title'=>'required|max:255',
+            'due_date'=>'nullable|date',
+            'priority'=>'required|in:low,medium,high',
         ]);
 
         Todo::create([
             'user_id'=>auth()->id(),
             'title'=>$request->title,
-            'completed'=>false
+            'completed'=>false,
+            'due_date'=>$request->due_date,
+            'priority'=>$request->priority,
         ]);
 
         return redirect('/todos');

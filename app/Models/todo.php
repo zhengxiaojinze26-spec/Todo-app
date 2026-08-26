@@ -13,7 +13,9 @@ class todo extends Model
     protected $fillable=[
         'user_id',
         'title',
-        'completed'
+        'completed',
+        'due_date',
+        'priority',
     ];
 
     public function user()

@@ -16,7 +16,7 @@
 
 .forms{
     display: flex;
-    align-items: flex-end;
+    align-items: flex-center;
     gap: 20px;
     margin-left: auto;
     margin-right: 30px;
