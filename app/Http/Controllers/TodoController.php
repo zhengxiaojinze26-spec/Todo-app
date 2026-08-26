@@ -107,10 +107,14 @@ class TodoController extends Controller
 
         $request->validate([
             'title'=>'required|max:255',
+            'due_date'=>'nullable|date',
+            'priority'=>'required|in:low,medium,high',
         ]);
 
         $todo->update([
-            'title'=>$request->title
+            'title'=>$request->title,
+            'due_date'=>$request->due_date,
+            'priority'=>$request->priority,
         ]);
 
         return redirect()->route('todos.index',[
