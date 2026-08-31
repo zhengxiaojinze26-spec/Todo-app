@@ -67,7 +67,11 @@
 
                 <div class="d-flex text-muted small gap-4">
                 <p>期限：{{$todo->due_date ?? 'なし'}}</p>
-                <p>優先度：{{$todo->priority}}</p>
+                <p>優先度：{{[
+                    'high'=>'高',
+                    'medium'=>'中',
+                    'low'=>'低'
+                ][$todo->priority]}}</p>
                 </div>
             </div>
 
