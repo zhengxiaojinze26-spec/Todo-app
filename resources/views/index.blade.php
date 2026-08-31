@@ -16,12 +16,12 @@
         <!--ログアウト-->
         <form class="d-flex align-items-end me-3" action="{{route('logout')}}" method="POST">
             @csrf
-            <button type="submit">Log out</button>
+            <button type="submit" class="btn btn-outline-primary">Log out</button>
         </form>
         </div>
 
         <div class="header-form">
-        <p>追加するタスクを入力してください。</p>
+        <p class="text-secondary">追加するタスクを入力してください。</p>
 
         <!--追加フォーム-->
         <form action="/todos" method="POST">
@@ -41,7 +41,7 @@
                 </option>
             </select>
 
-            <button type="submit">追加</button>
+            <button type="submit" class="btn btn-success btn-sm">追加</button>
         </form>
 
         </div>
@@ -60,12 +60,17 @@
         <!--タスク完了/未完了判定-->
         <div class="task-column">
             <div class="task-content">
+
+                <!--タスク名表示-->
+                <div class="border-bottom border-1">
                 @if($todo->completed)
                     <p>Θ　{{$todo->title}}</p>
                 @else
                     <p>Ο　{{$todo->title}}</p>
                 @endif
+                </div>
 
+                <!--期限・優先度表示-->
                 <div class="d-flex text-muted small gap-4">
                 <p>期限：{{$todo->due_date ?? 'なし'}}</p>
                 <p>優先度：{{[
@@ -81,14 +86,14 @@
                 <form action="/todos/{{$todo->id}}" method="POST" style="display: inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit">削除</button>
+                    <button type="submit" class="btn btn-secondary">削除</button>
                 </form>
 
                 <!--完了フォーム-->
                 <form action="/todos/{{$todo->id}}/complete" method="POST" style="display: inline;">
                     @csrf
                     @method('PATCH')
-                    <button type="submit">完了</button>
+                    <button type="submit" class="btn btn-secondary">完了</button>
                 </form>
 
                 <!--編集ページ移動-->
@@ -96,7 +101,7 @@
                     <input type="hidden" name="keyword" value="{{ $keyword }}">
                     <input type="hidden" name="status" value="{{ $status }}">
                     <input type="hidden" name="sort" value="{{ $sort }}">
-                    <button type="submit">編集</button>
+                    <button type="submit" class="btn btn-secondary">編集</button>
                 </form>
             </div>
         </div>
@@ -104,7 +109,7 @@
 
     <!--検索フォーム-->
     <form action="{{ route('todos.search')}}" method="GET">
-        <button type="submit">検索</button>
+        <button type="submit" class="btn btn-success">検索</button>
     </form>
 
     </main>

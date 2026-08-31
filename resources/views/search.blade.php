@@ -10,8 +10,7 @@
     <div class="container">
     <header>
         <h1>Todo検索</h1>
-
-        <p>検索したいTodoを入力してください。</p>
+        <p class="text-secondary">検索したいTodoを入力してください。</p>
 
         <form class="ms-3" action="{{ route('todos.index') }}" method="GET">
             <input type="text" name="keyword" placeholder="Todoを検索">
@@ -22,7 +21,7 @@
                 <option value="completed">完了済み</option>
             </select>
 
-            <button type="submit">検索</button>
+            <button type="submit" class="btn btn-success btn-sm">検索</button>
 
             <div class="d-flex align-items-center mt-3">
                 <label for="sort" class="me-2">並べ替えオプション:</label>
@@ -40,7 +39,7 @@
     <main class="d-flex min-vh-100">
     <!--トップページに戻る-->
     <form class="back align-items-center mt-5 w-100" action="/" Method="get">
-        <button type="submit">戻る</button>
+        <button type="submit" class="btn btn-secondary">戻る</button>
     </form>
     </main>
 
