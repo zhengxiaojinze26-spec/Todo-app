@@ -58,6 +58,16 @@
                 @endif
                 </div>
 
+                <!--期限・優先度表示-->
+                <div class="d-flex text-muted small gap-4">
+                <p>期限：{{$task->due_date ?? 'なし'}}</p>
+                <p>優先度：{{[
+                    'high'=>'高',
+                    'medium'=>'中',
+                    'low'=>'低'
+                ][$task->priority]}}</p>
+                </div>
+
             </div>
         </div>
 
