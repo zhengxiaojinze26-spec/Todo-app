@@ -16,13 +16,24 @@
         <form class="ms-3" action="{{ route('todos.index') }}" method="GET">
             <input type="text" name="keyword" placeholder="Todoを検索">
 
-            <select name="status" class="ms-5">
+            <select name="status">
                 <option value="all">すべて</option>
                 <option value="incomplete">未完了</option>
                 <option value="completed">完了済み</option>
             </select>
 
             <button type="submit">検索</button>
+
+            <div class="d-flex align-items-center mt-3">
+                <label for="sort" class="me-2">並べ替えオプション:</label>
+
+                <select id="sort" name="sort">
+                    <option value="latest">新しい順</option>
+                    <option value="due_date">期限が近い順</option>
+                    <option value="priority">優先度が高い順</option>
+                </select>
+
+            </div>
         </form>
     </header>
 

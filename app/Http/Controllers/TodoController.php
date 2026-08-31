@@ -13,22 +13,48 @@ class TodoController extends Controller
      */
     public function index(Request $request): View
     {
+        //検索キーワードとステータスを取得
         $keyword=$request->input('keyword');
         $status=$request->input('status');
+        $sort=$request->input('sort','latest');
 
+        //ユーザ識別
         $todos=auth()->user()->todos()
+
+        //キーワード検索
         ->when($keyword,function($query) use ($keyword){
             $query->where('title','like','%' . $keyword . '%');
         })
+
+        //完了・未完了検索
         ->when($status==='incomplete',function($query){
             $query->where('completed',false);
         })
         ->when($status==='completed',function($query){
             $query->where('completed',true);
         })
-        ->latest()->get();
 
-        return view('index',compact('todos','keyword','status'));
+        //期限日の昇順(期限近い順)並び替え
+        ->when($sort==='due_date',function($query){
+            $query->orderBy('due_date','asc');
+        })
+
+        //優先度並び替え
+        ->when($sort==='priority',function($query){
+            $query->orderByRaw("
+            CASE priority
+                WHEN 'high' THEN 1
+                WHEN 'medium' THEN 2
+                WHEN 'low' THEN 3
+            END
+            ");
+        })
+        ->when($sort==='latest',function($query){
+            $query->latest();
+        })
+        ->get();
+
+        return view('index',compact('todos','keyword','status','sort'));
     }
 
     /**
@@ -46,15 +72,19 @@ class TodoController extends Controller
     {
         $request->validate([
             'title'=>'required|max:255',
+            'due_date'=>'nullable|date',
+            'priority'=>'required|in:low,medium,high',
         ]);
 
         Todo::create([
             'user_id'=>auth()->id(),
             'title'=>$request->title,
-            'completed'=>false
+            'completed'=>false,
+            'due_date'=>$request->due_date,
+            'priority'=>$request->priority,
         ]);
 
-        return redirect('/todos');
+        return redirect(url()->previous());
     }
 
     /**
@@ -74,22 +104,48 @@ class TodoController extends Controller
             abort(403);
         }
 
+        //検索キーワードとステータスを取得
         $keyword=$request->input('keyword');
         $status=$request->input('status');
+        $sort=$request->input('sort','latest');
 
+        //ユーザ識別
         $todos=auth()->user()->todos()
+
+        //キーワード検索
         ->when($keyword,function($query) use ($keyword){
             $query->where('title','like','%' . $keyword . '%');
         })
+
+        //完了・未完了検索
         ->when($status==='incomplete',function($query){
             $query->where('completed',false);
         })
         ->when($status==='completed',function($query){
             $query->where('completed',true);
         })
-        ->latest()->get();
 
-        return view('edit',compact('todo','todos','keyword','status'));
+        //期限日の昇順(期限近い順)並び替え
+        ->when($sort==='due_date',function($query){
+            $query->orderBy('due_date','asc');
+        })
+
+        //優先度並び替え
+        ->when($sort==='priority',function($query){
+            $query->orderByRaw("
+            CASE priority
+                WHEN 'high' THEN 1
+                WHEN 'medium' THEN 2
+                WHEN 'low' THEN 3
+            END
+            ");
+        })
+        ->when($sort==='latest',function($query){
+            $query->latest();
+        })
+        ->get();
+
+        return view('edit',compact('todo','todos','keyword','status','sort'));
     }
 
     /**
@@ -103,15 +159,20 @@ class TodoController extends Controller
 
         $request->validate([
             'title'=>'required|max:255',
+            'due_date'=>'nullable|date',
+            'priority'=>'required|in:low,medium,high',
         ]);
 
         $todo->update([
-            'title'=>$request->title
+            'title'=>$request->title,
+            'due_date'=>$request->due_date,
+            'priority'=>$request->priority,
         ]);
 
         return redirect()->route('todos.index',[
             'keyword'=>$request->input('keyword'),
             'status'=>$request->input('status'),
+            'sort'=>$request->input('sort'),
         ]);
     }
 
