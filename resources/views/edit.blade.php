@@ -12,7 +12,7 @@
         <h1>編集画面</h1>
 
         <div class="header-form">
-        <p>タスク名を変更してください。</p>
+        <p class="text-secondary">タスク名を変更してください。</p>
 
         <!--編集フォーム-->
         <form action="/todos/{{$todo->id}}" method="POST">
@@ -37,7 +37,7 @@
                 </option>
             </select>
 
-            <button type="submit">更新</button>
+            <button type="submit" class="btn btn-success btn-sm">更新</button>
         </form>
         </div>
     </header>
@@ -48,11 +48,15 @@
 
         <div class="task-column {{$task->id===$todo->id ? 'editing' : ''}}">
             <div class="task-content">
+
+                <!--タスク名表示-->
+                <div class="border-bottom border-1">
                 @if($task->completed)
                     <p>Θ　{{$task->title}}</p>
                 @else
                     <p>Ο　{{$task->title}}</p>
                 @endif
+                </div>
 
             </div>
         </div>
