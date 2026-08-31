@@ -43,6 +43,7 @@
 
             <button type="submit">追加</button>
         </form>
+
         </div>
     </header>
 
@@ -94,6 +95,7 @@
                 <form action="/todos/{{$todo->id}}/edit" method="GET" style="display: inline;">
                     <input type="hidden" name="keyword" value="{{ $keyword }}">
                     <input type="hidden" name="status" value="{{ $status }}">
+                    <input type="hidden" name="sort" value="{{ $sort }}">
                     <button type="submit">編集</button>
                 </form>
             </div>
@@ -104,8 +106,8 @@
     <form action="{{ route('todos.search')}}" method="GET">
         <button type="submit">検索</button>
     </form>
-    </main>
 
+    </main>
     </div>
 </body>
 </html>

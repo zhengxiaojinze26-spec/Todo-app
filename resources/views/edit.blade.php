@@ -20,7 +20,8 @@
             @method('PUT')
 
             <input type="hidden" name="keyword" value="{{ $keyword }}">
-            <input type="hidden" name="status" value="{{ $status}}">
+            <input type="hidden" name="status" value="{{ $status }}">
+            <input type="hidden" name="sort" value="{{ $sort }}">
 
             <input type="text" name="title" value="{{$todo->title}}">
             <input type="date" name="due_date" value="{{$todo->due_date}}">
